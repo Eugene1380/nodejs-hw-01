@@ -1,15 +1,12 @@
-const fs = require('fs');
-const path = require('path');
+import { PATH_DB } from '../constants/contacts.js';
+import fs from 'fs/promises';
 
-function readContacts() {
-  const filePath = path.resolve(__dirname, '../db/db.json');
+export const readContacts = async () => {
   try {
-    const data = fs.readFileSync(filePath, 'utf8'); 
+    const data = await fs.readFile(PATH_DB, 'utf8');
     return JSON.parse(data);
   } catch (error) {
-    console.error('Ошибка при считывании файла:', error);
-    throw error;
+    console.error('Error reading contacts:', error);
+    return [];
   }
-}
-
-module.exports = readContacts;
+};

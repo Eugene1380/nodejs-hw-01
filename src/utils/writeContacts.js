@@ -1,15 +1,10 @@
-const fs = require('fs');
-const path = require('path');
+import { PATH_DB } from '../constants/contacts.js';
+import fs from 'fs/promises';
 
-function writeContacts(data) {
-  const filePath = path.resolve(__dirname, '../db/db.json');
+export const writeContacts = async (updatedContacts) => {
   try {
-    const jsonData = JSON.stringify(data, null, 2);
-    fs.writeFileSync(filePath, jsonData, 'utf8');
+    await fs.writeFile(PATH_DB, JSON.stringify(updatedContacts, null, 2));
   } catch (error) {
-    console.error('Ошибка при записи в файл:', error);
-    throw error;
+    console.error('Error writing contacts:', error);
   }
-}
-
-module.exports = writeContacts;
+};
